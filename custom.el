@@ -154,8 +154,15 @@
 
 ;; ------------------------------------------------------------
 ;; gestor de sesiones (guarda buffers y ventanas)
+
 (require 'workgroups2)
 (workgroups-mode 1)
+
+
+;; ------------------------------------------------------------
+;; activar helm en todos lados
+
+(require 'prelude-helm-everywhere)
 
 
 ;; ------------------------------------------------------------
