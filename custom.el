@@ -82,7 +82,7 @@
 ;; yasnippets
 
 (add-to-list 'load-path
-             "~/.emacs.d/plugins/yasnippet")
+             "~/.emacs.d/personal/misSnippets")
 (require 'yasnippet)
 (yas-global-mode 1)
 
@@ -107,9 +107,9 @@
 ;; ------------------------------------------------------------
 ;; slime
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
 ;; Replace "sbcl" with the path to your implementation
-(setq inferior-lisp-program "sbcl")
+;; (setq inferior-lisp-program "sbcl")
 
 
 ;; ------------------------------------------------------------
@@ -162,7 +162,14 @@
 ;; ------------------------------------------------------------
 ;; activar helm en todos lados
 
-(require 'prelude-helm-everywhere)
+;; (require 'prelude-helm-everywhere)
+
+
+;; ------------------------------------------------------------
+;; emacs reconoce las oraciones cuando encuentra punto y dos
+;; espacios. para que las reconozca con un solo espacio:
+
+(setq sentence-end-double-space nil)
 
 
 ;; ------------------------------------------------------------
@@ -183,3 +190,15 @@
 ;; para guardar los buffers abiertos (no guarda las ventanas)
 
 ;; (desktop-save-mode 1)
+
+
+(require 'guide-key)
+(setq guide-key/guide-key-sequence '("C-x" "C-c"))
+(setq guide-key/recursive-key-sequence-flag t)
+(guide-key-mode 1)  ; Enable guide-key-mode
+
+;; (use-package dired-mode                 ;
+;;      :defer t
+;;      :bind ("C-t" . previous-line))
+
+;; (define-key dired-map (kbd "C-t") nil)
