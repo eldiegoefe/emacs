@@ -1,0 +1,14 @@
+# -*- mode: snippet
+# name: encabezado
+# key: encc
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+:title: ${1:titulo}
+:date: ${2:2014}-${3:10}-${4:31} ${5:10:00}
+:category: ${6:$$(yas-choose-value '("blog" "politica" "salud" "tecnicismos"))}
+:tags: $7
+:author: El Diego Efe
+:excerpt: $1
+
+$0

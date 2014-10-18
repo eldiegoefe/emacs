@@ -17,11 +17,12 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-enabled-themes (quote (zenburn)))
- '(custom-safe-themes (quote ("3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" default)))
+ '(custom-safe-themes (quote ("b21bf64c01dc3a34bc56fff9310d2382aa47ba6bc3e0f4a7f5af857cd03a7ef7" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" default)))
  '(fci-rule-color "#383838")
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
+ '(vc-annotate-very-old-color "#DC8CC3")
+ '(yas-snippet-dirs (quote ("~/.emacs.d/personal/misSnippets/" yas-installed-snippets-dir)) nil (yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -81,8 +82,6 @@
 ;; ------------------------------------------------------------
 ;; yasnippets
 
-(add-to-list 'load-path
-             "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
 (yas-global-mode 1)
 
@@ -160,12 +159,21 @@
 
 
 ;; ------------------------------------------------------------
-;; activar helm en todos lados
+;; cambiar M-x a la version power de helm
 
-(require 'prelude-helm-everywhere)
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 
 ;; ------------------------------------------------------------
+;; smart mode line
+
+(sml/setup)
+;;(sml/apply-theme 'dark)
+;;(sml/apply-theme 'light)
+;;(sml/apply-theme 'respectful)
+;;(sml/apply-theme 'automatic)
+(sml/apply-theme 'powerline)
+
 ;; ------------------------------------------------------------
 ;; fuera de uso
 ;; ------------------------------------------------------------
@@ -183,3 +191,11 @@
 ;; para guardar los buffers abiertos (no guarda las ventanas)
 
 ;; (desktop-save-mode 1)
+
+
+;; ------------------------------------------------------------
+;; para poner mis snippets en ~/emacs.d/personal/misSnippets
+;; edit: desactivado porque edité yas-snippet-dirs desde
+;; customize variable.
+
+;; (setq yas-snippet-dirs '("~/emacs.d/personal/misSnippets"))
