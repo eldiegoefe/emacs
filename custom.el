@@ -30,6 +30,12 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; -------------------------------------------------------------------
+;; para agregar los paquetes de contrib
+
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
 
 ;; ------------------------------------------------------------
 ;; ------------------------------------------------------------
@@ -52,26 +58,11 @@
 (global-set-key (kbd "<C-f5>") 'compile)
 (global-set-key (kbd "<C-f6>") 'next-error)
 
-;; ------------------------------------------------------------
-;; para correr trozos de código dentro de org-mode
-;; must have org-mode loaded before we can configure org-babel
-(require 'org-install)
+;; -------------------------------------------------------------------
+;; configuracion de org-mode
 
-;; ------------------------------------------------------------
-;; some initial langauges we want org-babel to support
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (sh . t)
-   (python . t)
-   (R . t)
-   (ruby . t)
-   (ditaa . t)
-   (dot . t)
-   (octave . t)
-   (sqlite . t)
-   (perl . t)
-   ))
+(load "~/.emacs.d/personal/config-org-mode-diego.el")
+
 
 ;; ------------------------------------------------------------
 ;; fin de las configuraciones extraidas del video 8 de rt2011
