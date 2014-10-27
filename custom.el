@@ -50,7 +50,7 @@
 
 ;; ------------------------------------------------------------
 ;; start the emacs server for emacsclient
-(server-start)
+;; (server-start)
 
 ;; ------------------------------------------------------------
 ;; setup custom shortcuts
@@ -62,6 +62,7 @@
 ;; configuracion de org-mode
 
 (load "~/.emacs.d/personal/config-org-mode-diego.el")
+;; (load "~/.emacs.d/personal/config-org-mode.el")
 
 
 ;; ------------------------------------------------------------
@@ -114,6 +115,12 @@
 
 (global-set-key (kbd "<f2>") 'kill-ring-save)
 (global-set-key (kbd "<f3>") 'yank)
+
+;; en /.emacs.d/core/prelude-global-keybindings.el está aun la
+;; definición con <f12> pero la cambio acá para probar las cosas del
+;; tutorial de org-mode. Queda entonces redundante, pero anda...
+
+(global-set-key (kbd "<M-f12>") 'menu-bar-mode)
 
 
 ;; ------------------------------------------------------------
@@ -179,6 +186,13 @@
 (setq guide-key/guide-key-sequence '("C-x" "C-c"))
 (setq guide-key/recursive-key-sequence-flag t)
 (guide-key-mode 1)
+
+
+;; -------------------------------------------------------------------
+;; nuevo modo de indentación de artur malabarba, reemplaza
+;; electric-indent-mode
+
+(global-aggressive-indent-mode)
 
 
 ;; ------------------------------------------------------------
