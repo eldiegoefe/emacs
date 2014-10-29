@@ -19,6 +19,7 @@
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes (quote ("b21bf64c01dc3a34bc56fff9310d2382aa47ba6bc3e0f4a7f5af857cd03a7ef7" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" default)))
  '(delete-selection-mode t)
+ '(ergoemacs-smart-paste (quote browse-kill-ring))
  '(fci-rule-color "#383838")
  '(initial-scratch-message nil)
  '(org-CUA-compatible nil)
@@ -38,35 +39,50 @@
  ;; If there is more than one, they won't work right.
  )
 
+
+(require 'use-package)
+
 ;; -------------------------------------------------------------------
 ;; para agregar los paquetes de contrib
 
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
-;; nuevo layout de ergoemacs
 
-(defvar ergoemacs-layout-er
-  '("" ""   "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ""  ""  ""
-    "" "\\" "." "," ";" "p" "y" "f" "g" "c" "h" "l" ""  ""  ""
-    "" ""   "a" "o" "e" "u" "i" "d" "r" "t" "n" "s" "'" ""  ""
-    "" ""   "-" "q" "j" "k" "x" "b" "m" "w" "v" "z" ""  ""  ""
-    ;; Shifted
-    "" ""  "!" "@" "#" "$" "%" "^" "&" "*" "(" ")" ""  "" ""
-    "" "|" ">" "<" ":" "P" "Y" "F" "G" "C" "H" "L" ""  "" ""
-    "" ""  "A" "O" "E" "U" "I" "D" "R" "T" "N" "S" "'" "" ""
-    "" ""  "_" "Q" "J" "K" "X" "B" "M" "W" "V" "Z" ""  "" "")
-  "Ergodox con Dvorak.  Del Diego Efe.")
+(use-package ergoemacs-mode
+  :ensure ergoemacs-mode
+  :init
+  ;; nuevo layout de ergoemacs
+  (defvar ergoemacs-layout-er
+    '("" ""   "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ""  ""  ""
+      "" "\\" "." "," ";" "p" "y" "f" "g" "c" "h" "l" ""  ""  ""
+      "" ""   "a" "o" "e" "u" "i" "d" "r" "t" "n" "s" "'" ""  ""
+      "" ""   "-" "q" "j" "k" "x" "b" "m" "w" "v" "z" ""  ""  ""
+      ;; Shifted
+      "" ""  "!" "@" "#" "$" "%" "^" "&" "*" "(" ")" ""  "" ""
+      "" "|" ">" "<" ":" "P" "Y" "F" "G" "C" "H" "L" ""  "" ""
+      "" ""  "A" "O" "E" "U" "I" "D" "R" "T" "N" "S" "'" "" ""
+      "" ""  "_" "Q" "J" "K" "X" "B" "M" "W" "V" "Z" ""  "" "")
+    "Ergodox con Dvorak.  Del Diego Efe.")
+
+  :config
+  (progn
+    (setq ergoemacs-theme nil)
+    (setq ergoemacs-keyboard-layout "er")
+    (ergoemacs-mode 1)
+    ))
+
+
 
 ;; -------------------------------------------------------------------
 ;; ergoemacs de vuelta!
 
 ;; (package-initialize)
 
-(setq ergoemacs-theme nil)
-(setq ergoemacs-keyboard-layout "er")
-(require 'ergoemacs-mode)
-(ergoemacs-mode 1)
+;; (setq ergoemacs-theme nil)
+;; (setq ergoemacs-keyboard-layout "er")
+;; (require 'ergoemacs-mode)
+;; (ergoemacs-mode 1)
 
 
 ;; ------------------------------------------------------------
@@ -103,16 +119,26 @@
 ;; ------------------------------------------------------------
 ;; ------------------------------------------------------------
 
+(defmacro hook-into-modes (func modes)
+  `(dolist (mode-hook ,modes)
+     (add-hook mode-hook ,func)))
 
 ;; ------------------------------------------------------------
 ;; yasnippets
 
-(require 'yasnippet)
-(yas-global-mode 1)
+(use-package yasnippet
+  :ensure yasnippet
+  :commands (yas-minor-mode yas-expand)
+  :init
+  (hook-into-modes #'(lambda () (yas-minor-mode 1))
+                   '(org-mode-hook
+                     python-mode-hook
+                     rst-mode-hook)))
 
 
 ;; ------------------------------------------------------------
 ;; para evitar que se molesten los modos de company y yasnippet
+;; "\t" se refiere a TAB
 
 (define-key company-active-map "\t" 'company-yasnippet-or-completion)
 
@@ -126,6 +152,7 @@
 (defun yas/expansion-at-point ()
   "Tested with v0.6.1. Extracted from `yas/expand-1'"
   (first (yas/current-key)))
+
 
 
 ;; ------------------------------------------------------------
