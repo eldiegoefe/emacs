@@ -46,47 +46,25 @@
 ;; ------------------------------------------------------------
 ;; emacs reconoce las oraciones cuando encuentra punto y dos
 ;; espacios. para que las reconozca con un solo espacio:
-
 (setq sentence-end-double-space nil)
 
 
 ;; -------------------------------------------------------------------
-;; configuracion de org-mode
-
+;; configuracion de org-mode, tambien se incluye el repositorio para
+;; agregar los paquetes de contrib
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (load "~/.emacs.d/personal/config-org-mode-diego.el")
-;; (load "~/.emacs.d/personal/config-org-mode.el")
 
 
 (defmacro hook-into-modes (func modes)
   `(dolist (mode-hook ,modes)
      (add-hook mode-hook ,func)))
 
-;; ------------------------------------------------------------
-;; para evitar que se molesten los modos de company y yasnippet
-;; "\t" se refiere a TAB
-
-(define-key company-active-map "\t" 'company-yasnippet-or-completion)
-
-(defun company-yasnippet-or-completion ()
-  (interactive)
-  (if (yas/expansion-at-point)
-      (progn (company-abort)
-             (yas/expand))
-    (company-complete-common)))
-
-(defun yas/expansion-at-point ()
-  "Tested with v0.6.1. Extracted from `yas/expand-1'"
-  (first (yas/current-key)))
-
-
 
 (require 'use-package)
 
-;; -------------------------------------------------------------------
-;; para agregar los paquetes de contrib
 
-(require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 
 
@@ -108,7 +86,6 @@
       "" ""  "A" "O" "E" "U" "I" "D" "R" "T" "N" "S" "'" "" ""
       "" ""  "_" "Q" "J" "K" "X" "B" "M" "W" "V" "Z" ""  "" "")
     "Ergodox con Dvorak.  Del Diego Efe.")
-
   :config
   (progn
     (setq ergoemacs-theme nil)
@@ -121,10 +98,22 @@
   :ensure yasnippet
   :commands (yas-minor-mode yas-expand)
   :init
-  (hook-into-modes #'(lambda () (yas-minor-mode 1))
-                   '(org-mode-hook
-                     python-mode-hook
-                     rst-mode-hook)))
+  (progn
+    (defun company-yasnippet-or-completion ()
+      (interactive)
+      (if (yas/expansion-at-point)
+          (progn (company-abort)
+                 (yas/expand))
+        (company-complete-common)))
+
+    (defun yas/expansion-at-point ()
+      "Tested with v0.6.1. Extracted from `yas/expand-1'"
+      (first (yas/current-key)))
+
+    (hook-into-modes #'(lambda () (yas-minor-mode 1))
+                     '(org-mode-hook
+                       python-mode-hook
+                       rst-mode-hook))))
 
 
 
@@ -155,7 +144,6 @@
   ensure: aggressive-indent
   init:
   (global-aggressive-indent-mode))
-
 
 
 
@@ -193,26 +181,12 @@
 
 
 
-
-
-
-
 ;; KEYBINDINGS
 
 
-;; ------------------------------------------------------------
-;; cambiar M-x a la version power de helm
 (global-set-key (kbd "M-a") 'helm-M-x)
-
 (global-set-key (kbd "<M-f12>") 'menu-bar-mode)
-
-
-;; ------------------------------------------------------------
-;; intercambio de letras para facilitar keybindings en dvorak
-
-;; (global-set-key (kbd "C-t") 'previous-line)
-(keyboard-translate ?\C-x ?\C-u)
-(keyboard-translate ?\C-u ?\C-x)
+(global-set-key (kbd "s-l") 'describe-thing-in-popup)
 
 
 ;; ------------------------------------------------------------
@@ -220,8 +194,18 @@
 
 (define-key prelude-mode-map (kbd "M-o") nil)
 
-(global-set-key (kbd "s-l") 'describe-thing-in-popup)
+;; ------------------------------------------------------------
+;; para evitar que se molesten los modos de company y yasnippet
+;; "\t" se refiere a TAB
 
+(define-key company-active-map "\t" 'company-yasnippet-or-completion)
+
+
+;; ------------------------------------------------------------
+;; intercambio de letras para facilitar keybindings en dvorak
+;; (global-set-key (kbd "C-t") 'previous-line)
+(keyboard-translate ?\C-x ?\C-u)
+(keyboard-translate ?\C-u ?\C-x)
 
 
 ;; ------------------------------------------------------------
