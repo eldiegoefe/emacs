@@ -138,15 +138,15 @@
 ;; ------------------------------------------------------------
 ;; para que M-S-down y M-S-up funcionen en org-mode
 
-(define-key prelude-mode-map [(meta shift up)] nil)
-(define-key prelude-mode-map [(meta shift down)] nil)
+;; (define-key prelude-mode-map [(meta shift up)] nil)
+;; (define-key prelude-mode-map [(meta shift down)] nil)
 
 
 ;; ------------------------------------------------------------
 ;; mis definiciones de teclas
 
-(global-set-key (kbd "<f2>") 'kill-ring-save)
-(global-set-key (kbd "<f3>") 'yank)
+;; (global-set-key (kbd "<f2>") 'kill-ring-save)
+;; (global-set-key (kbd "<f3>") 'yank)
 
 ;; en /.emacs.d/core/prelude-global-keybindings.el está aun la
 ;; definición con <f12> pero la cambio acá para probar las cosas del
@@ -158,7 +158,7 @@
 ;; ------------------------------------------------------------
 ;; intercambio de letras para facilitar keybindings en dvorak
 
-(global-set-key (kbd "C-t") 'previous-line)
+;; (global-set-key (kbd "C-t") 'previous-line)
 (keyboard-translate ?\C-x ?\C-u)
 (keyboard-translate ?\C-u ?\C-x)
 
@@ -226,10 +226,6 @@
 
 (global-aggressive-indent-mode)
 
-;; -------------------------------------------------------------------
-;; desactivo key-chords para probar evil-mode
-
-;; (key-chord-mode -1)
 
 
 ;; ------------------------------------------------------------
