@@ -87,6 +87,7 @@
 ;; ------------------------------------------------------------
 ;; setup custom shortcuts
 (global-set-key "\C-x\C-g" 'goto-line)
+
 (global-set-key (kbd "<C-f5>") 'compile)
 (global-set-key (kbd "<C-f6>") 'next-error)
 
@@ -143,6 +144,12 @@
 
 
 ;; ------------------------------------------------------------
+;; para que M-o cambie de buffer en vez de ser otro S-Enter
+
+(define-key prelude-mode-map (kbd "M-o") nil)
+
+
+;; ------------------------------------------------------------
 ;; mis definiciones de teclas
 
 ;; (global-set-key (kbd "<f2>") 'kill-ring-save)
@@ -167,18 +174,18 @@
 ;; setear ipython -sin el notebook-
 ;; ("How to open IPython interpreter in emacs?" en stackexchange)
 
-(when (executable-find "ipython")
-  (setq
-   python-shell-interpreter "ipython"
-   python-shell-interpreter-args ""
-   python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-   python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-   python-shell-completion-setup-code
-   "from IPython.core.completerlib import module_completion"
-   python-shell-completion-module-string-code
-   "';'.join(module_completion('''%s'''))\n"
-   python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+;; (when (executable-find "ipython")
+;;   (setq
+;;    python-shell-interpreter "ipython"
+;;    python-shell-interpreter-args ""
+;;    python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;    python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;    python-shell-completion-setup-code
+;;    "from IPython.core.completerlib import module_completion"
+;;    python-shell-completion-module-string-code
+;;    "';'.join(module_completion('''%s'''))\n"
+;;    python-shell-completion-string-code
+;;    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
 
 ;; ------------------------------------------------------------
@@ -190,7 +197,7 @@
 
 ;; ------------------------------------------------------------
 ;; cambiar M-x a la version power de helm
-(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-a") 'helm-M-x)
 
 ;; ------------------------------------------------------------
 ;; emacs reconoce las oraciones cuando encuentra punto y dos
@@ -214,10 +221,10 @@
 ;; guide key abre un buffer con las opciones de keybindings
 ;; correspondientes a cada prefix-keys que se vayan apretando
 
-(require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x" "C-c"))
-(setq guide-key/recursive-key-sequence-flag t)
-(guide-key-mode 1)
+;; (require 'guide-key)
+;; (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+;; (setq guide-key/recursive-key-sequence-flag t)
+;; (guide-key-mode 1)
 
 
 ;; -------------------------------------------------------------------
@@ -227,6 +234,31 @@
 (global-aggressive-indent-mode)
 
 
+;; ------------------------------------------------------------
+;; mejora en las ayudas. de mi pregunta en Emacs.SE:
+;; http://emacs.stackexchange.com/questions/2777/how-to-get-the-function-help-without-typing
+
+(require 'popup)
+
+(defun describe-thing-in-popup ()
+  (interactive)
+  (let* ((thing (symbol-at-point))
+         (help-xref-following t)
+         (description (save-window-excursion
+                        (with-temp-buffer
+                          (help-mode)
+                          (help-xref-interned thing)
+                          (buffer-string)))))
+    (popup-tip description
+               :point (point)
+               :around t
+               :height 20
+               :scroll-bar t
+               :margin t)))
+
+(global-set-key (kbd "s-l") 'describe-thing-in-popup)
+
+(require 'help-fns+)
 
 ;; ------------------------------------------------------------
 ;; fuera de uso
