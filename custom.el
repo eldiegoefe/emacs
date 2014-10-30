@@ -64,8 +64,7 @@
 
 (require 'use-package)
 
-
-
+(setq company-show-numbers t)
 
 
 ;; USE-PACKAGE
@@ -180,7 +179,6 @@
 
 
 
-
 ;; KEYBINDINGS
 
 
@@ -189,11 +187,27 @@
 (global-set-key (kbd "s-l") 'describe-thing-in-popup)
 
 
-;; ------------------------------------------------------------
-;; para que M-o cambie de buffer en vez de ser otro S-Enter
+;; ------------------------------------------------------------------
+;; quitar keybindings en algunos modos que tapan funciones habituales
 
 (define-key prelude-mode-map (kbd "M-o") nil)
+(define-key org-mode-map (kbd "M-a") nil)
 
+
+
+;; -----------------------------------------------------------
+;; para company
+
+(defun company-abort-y-completar-caracter (mi-char)
+  (company-abort)
+  (insert mi-char))
+
+(define-key company-active-map (kbd "SPC")
+  (lambda() (interactive) (company-abort-y-completar-caracter '" ")))
+
+(define-key company-active-map [return] 'company-complete-selection)
+;; (define-key company-active-map (kbd "M-c") 'company-select-previous-or-abort)
+;; (define-key company-active-map (kbd "M-t") 'company-select-next-or-abort)
 ;; ------------------------------------------------------------
 ;; para evitar que se molesten los modos de company y yasnippet
 ;; "\t" se refiere a TAB
