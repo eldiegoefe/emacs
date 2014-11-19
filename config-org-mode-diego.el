@@ -22,9 +22,9 @@
 
 ;; -------------------------------------------------------------------
 ;; esta parte está en prelude-org.el.
-;; (global-set-key "\C-cl" 'org-store-link)
-;; (global-set-key "\C-ca" 'org-agenda)
-;; (global-set-key "\C-cb" 'org-iswitchb
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
 (setq org-log-done t)
 
 
@@ -55,10 +55,29 @@
 ;; esta es la lista de archivos que contienen tareas (TODOs), en los
 ;; cuales se fija para armar la agenda
 
-(setq org-agenda-files (list "~/org/apuntes-varios.org"
-                             "~/org/facultad.org"
-                             "~/org/hardware.org"
-                             "~/org/journal.org"
-                             "~/org/reflexiones-y-apuntes.org"
-                             "~/org/salud-deportes.org"
-                             "~/org/software.org"))
+(setq org-agenda-files (list "~/mis-archivos-org/apuntes-varios.org"
+                             "~/mis-archivos-org/acomodar.org"))
+
+
+;; -------------------------------------------------------------------
+;; variables para que aparezcan los datos de la temporización de
+;; actividades dentro de un drawer.
+
+(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))     ;; Separate drawers for clocking and logs
+(setq org-clock-into-drawer t)    ;; Save clock data and state changes and notes in the LOGBOOK drawer
+
+
+;; -------------------------------------------------------------------
+;; secuencia de palabras clave para TODO.
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "EMPEZADO(e)" "ESPERANDO(s)" "HIBERNANDO(h)" "|" "INCUMPLIDO(i)" "COMPLETADO(c)" "CANCELADO(o)")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . (:foreground "red" :weight bold))
+        ("EMPEZADO" . (:foreground "green" :weight bold))
+        ("ESPERANDO" . (:foreground "orange" :weight bold))
+        ("HIBERNANDO" . (:foreground "deep sky blue" :weight bold))
+        ("INCUMPLIDO" . (:foreground "white" :weight bold))
+        ("COMPLETADO" . (:foreground "forest green"))
+        ("CANCELADO" . (:foreground "grey"))))

@@ -19,18 +19,21 @@
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes (quote ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "b21bf64c01dc3a34bc56fff9310d2382aa47ba6bc3e0f4a7f5af857cd03a7ef7" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" default)))
  '(delete-selection-mode t)
+ '(ergoemacs-handle-ctl-c-or-ctl-x (quote only-C-c-and-C-x))
  '(ergoemacs-smart-paste (quote browse-kill-ring))
  '(fci-rule-color "#383838")
  '(org-CUA-compatible nil)
+ '(org-agenda-files nil)
+ '(org-clock-into-drawer t t)
  '(org-replace-disputed-keys t)
  '(recentf-mode t)
  '(shift-select-mode nil)
- '(sml/mode-width (if (eq powerline-default-separator (quote arrow)) (quote right) (quote full)))
  '(sml/pos-id-separator (quote ("" (:propertize " " face powerline-active1) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (car powerline-default-separator-dir))) (quote powerline-active1) (quote powerline-active2)))) (:propertize " " face powerline-active2))))
  '(sml/pos-minor-modes-separator (quote ("" (:propertize " " face powerline-active1) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (cdr powerline-default-separator-dir))) (quote powerline-active1) nil))) (:propertize " " face sml/global))))
  '(sml/pre-id-separator (quote ("" (:propertize " " face sml/global) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (car powerline-default-separator-dir))) nil (quote powerline-active1)))) (:propertize " " face powerline-active1))))
  '(sml/pre-minor-modes-separator (quote ("" (:propertize " " face powerline-active2) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (cdr powerline-default-separator-dir))) (quote powerline-active2) (quote powerline-active1)))) (:propertize " " face powerline-active1))))
  '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+ '(sml/theme (quote dark))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
  '(vc-annotate-very-old-color "#DC8CC3")
@@ -47,6 +50,17 @@
 ;; Emacs reconoce las oraciones cuando encuentra un punto y dos
 ;; espacios. para que las reconozca con un solo espacio:
 (setq sentence-end-double-space nil)
+
+
+;; ------------------------------------------------------------------
+;; para la navegacion rapida, los comandos se activan cuando el punto
+;; esta al inicio del headline, sobre la primera estrella.
+
+(setq org-use-speed-commands t)
+(setq org-speed-commands-user (quote (("t" . outline-next-visible-heading)
+                                      ("c" . outline-previous-visible-heading)
+                                      ("n" . org-forward-heading-same-level)
+                                      ("r" . org-backward-heading-same-level))))
 
 
 ;; -------------------------------------------------------------------
@@ -134,13 +148,14 @@
     ;;(sml/apply-theme 'dark)
     ;;;;(sml/apply-theme 'light)
     ;;(sml/apply-theme 'respectful)
-    ;;(sml/apply-theme 'automatic)
-    (sml/apply-theme 'powerline)))
+    (sml/apply-theme 'automatic)
+    ;;(sml/apply-theme 'powerline))
+))
 
 
 
 (use-package aggressive-indent
-  ;; nuevo modo de indentación (creado por artur malabarba), reemplaza
+  ;; Nuevo modo de indentación (creado por artur malabarba), reemplaza
   ;; al modo electric-indent-mode
   ensure: aggressive-indent
   init:
@@ -195,6 +210,16 @@
 (define-key prelude-mode-map (kbd "M-o") nil)
 (define-key org-mode-map (kbd "M-a") nil)
 
+;; ------------------------------------------------------------------
+;; keybindings para navegar en org-mode
+
+(define-key org-mode-map (kbd "s-c") 'outline-previous-visible-heading)
+(define-key org-mode-map (kbd "s-t") 'outline-next-visible-heading)
+(define-key org-mode-map (kbd "s-n") 'org-forward-heading-same-level)
+(define-key org-mode-map (kbd "s-r") 'org-backward-heading-same-level)
+;; (define-key org-mode-map (kbd "S-s-c") 'outline-up-heading)
+(define-key org-mode-map (kbd "s-h") 'org-goto)
+
 
 
 ;; -----------------------------------------------------------
@@ -220,8 +245,8 @@
 ;; ------------------------------------------------------------
 ;; intercambio de letras para facilitar keybindings en dvorak
 ;; (global-set-key (kbd "C-t") 'previous-line)
-(keyboard-translate ?\C-x ?\C-u)
-(keyboard-translate ?\C-u ?\C-x)
+;; (keyboard-translate ?\C-x ?\C-u)
+;; (keyboard-translate ?\C-u ?\C-x)
 
 
 ;; ------------------------------------------------------------
