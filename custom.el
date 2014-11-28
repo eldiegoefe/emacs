@@ -22,6 +22,7 @@
  '(ergoemacs-handle-ctl-c-or-ctl-x (quote only-C-c-and-C-x))
  '(ergoemacs-smart-paste (quote browse-kill-ring))
  '(fci-rule-color "#383838")
+ '(menu-bar-mode nil)
  '(org-CUA-compatible nil)
  '(org-agenda-files nil)
  '(org-clock-into-drawer t t)
@@ -62,6 +63,14 @@
                                       ("n" . org-forward-heading-same-level)
                                       ("r" . org-backward-heading-same-level))))
 
+
+;; ------------------------------------------------------------------
+;; para que funcione el lisp que instalé (sbcl, ver en mi propio blog
+;; la entrada "A punto para Lisp").
+
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; Replace "sbcl" with the path to your implementation
+(setq inferior-lisp-program "sbcl")
 
 ;; -------------------------------------------------------------------
 ;; configuracion de org-mode, tambien se incluye el repositorio para
