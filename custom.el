@@ -6,45 +6,12 @@
 ;;; usando prelude, by bbatsov
 ;;; https://github.com/bbatsov/prelude
 
-;; ------------------------------------------------------------
-;; ------------------------------------------------------------
-;; lineas de configuración automática (¿prelude?)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#GENERALIDADES"])
- '(custom-enabled-themes (quote (zenburn)))
- '(custom-safe-themes (quote ("756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "b21bf64c01dc3a34bc56fff9310d2382aa47ba6bc3e0f4a7f5af857cd03a7ef7" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" default)))
- '(delete-selection-mode t)
- '(ergoemacs-handle-ctl-c-or-ctl-x (quote only-C-c-and-C-x))
- '(ergoemacs-smart-paste (quote browse-kill-ring))
- '(fci-rule-color "#383838")
- '(menu-bar-mode nil)
- '(org-CUA-compatible nil)
- '(org-agenda-files nil)
- '(org-clock-into-drawer t t)
- '(org-replace-disputed-keys t)
- '(recentf-mode t)
- '(shift-select-mode nil)
- '(sml/pos-id-separator (quote ("" (:propertize " " face powerline-active1) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (car powerline-default-separator-dir))) (quote powerline-active1) (quote powerline-active2)))) (:propertize " " face powerline-active2))))
- '(sml/pos-minor-modes-separator (quote ("" (:propertize " " face powerline-active1) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (cdr powerline-default-separator-dir))) (quote powerline-active1) nil))) (:propertize " " face sml/global))))
- '(sml/pre-id-separator (quote ("" (:propertize " " face sml/global) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (car powerline-default-separator-dir))) nil (quote powerline-active1)))) (:propertize " " face powerline-active1))))
- '(sml/pre-minor-modes-separator (quote ("" (:propertize " " face powerline-active2) (:eval (propertize " " (quote display) (funcall (intern (format "powerline-%s-%s" powerline-default-separator (cdr powerline-default-separator-dir))) (quote powerline-active2) (quote powerline-active1)))) (:propertize " " face powerline-active1))))
- '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
- '(sml/theme (quote dark))
- '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3")
- '(yas-snippet-dirs (quote ("~/.emacs.d/personal/misSnippets/" yas-installed-snippets-dir)) nil (yasnippet)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; -----------------------------------------------------------------
+;; guarda todas las variables y faces de M-x customize en un archivo
+;; aparte.
+(setq custom-file "~/.emacs.d/personal/my-custom.el")
+(load custom-file)
 
 
 ;; ------------------------------------------------------------
@@ -72,6 +39,7 @@
 ;; Replace "sbcl" with the path to your implementation
 (setq inferior-lisp-program "sbcl")
 
+
 ;; -------------------------------------------------------------------
 ;; configuracion de org-mode, tambien se incluye el repositorio para
 ;; agregar los paquetes de contrib
@@ -90,6 +58,11 @@
 
 (require 'use-package)
 (setq company-show-numbers t)
+
+;; configuracion para erc (chat de irc)
+;; mas info en: https://xdev.me/en/article/How_to_use_IRC_in_Emacs
+
+(setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
 
 
 ;; USE-PACKAGE
@@ -123,30 +96,46 @@
   :commands (yas-minor-mode yas-expand)
   :init
   (progn
-    (defun company-yasnippet-or-completion ()
-      (interactive)
-      (if (yas/expansion-at-point)
-          (progn (company-abort)
-                 (yas/expand))
-        (company-complete-common)))
+    ;; (defun company-yasnippet-or-completion ()
+    ;;   (interactive)
+    ;;   (if (yas/expansion-at-point)
+    ;;       (progn (company-abort)
+    ;;              (yas/expand))
+    ;;     (company-complete-common)))
 
-    (defun yas/expansion-at-point ()
-      "Tested with v0.6.1. Extracted from `yas/expand-1'"
-      (first (yas/current-key)))
+    ;; (defun yas/expansion-at-point ()
+    ;;   "Tested with v0.6.1. Extracted from `yas/expand-1'"
+    ;;   (first (yas/current-key)))
 
     (hook-into-modes #'(lambda () (yas-minor-mode 1))
                      '(org-mode-hook
                        python-mode-hook
-                       rst-mode-hook))))
+                       rst-mode-hook)))
+  :config
+  (progn
+    (setq yas-snippet-dirs '("~/.emacs.d/personal/misSnippets"
+                             yas-installed-snippets-dir))
+    (yas-reload-all)
+    ;; agregado para realmente cargar todos los snippets usando
+    ;; yas-snippet-dirs. De lo contrario, aunque se setea
+    ;; correctamente yas-snippet-dirs, no se activan los snippets hay
+    ;; alli. Igual sigue el problema de que en el menu de Yasnippets
+    ;; no aparece la entrada correspondiente al modo actual.
+
+    ;; (yas-load-directory "~/.emacs.d/personal/misSnippets")
+    ;; (yas-load-directory yas-installed-snippets-dir)
+    ))
 
 
 
-(use-package workgroups2
-  ;; gestor de sesiones (guarda buffers y ventanas)
-  :ensure workgroups2
-  :init
-  (workgroups-mode 1))
+;; nuevo modo para guardar el escritorio, desde emacs 24.4
+(desktop-save-mode)
 
+;; (use-package workgroups2
+;;   ;; gestor de sesiones (guarda buffers y ventanas)
+;;   :ensure workgroups2
+;;   :init
+;;   (workgroups-mode 1))
 
 
 (use-package smart-mode-line
@@ -155,11 +144,10 @@
   (progn
     (sml/setup)
     ;;(sml/apply-theme 'dark)
-    ;;;;(sml/apply-theme 'light)
+    ;;(sml/apply-theme 'light)
     ;;(sml/apply-theme 'respectful)
-    (sml/apply-theme 'automatic)
-    ;;(sml/apply-theme 'powerline))
-))
+    ;;(sml/apply-theme 'automatic)
+    (sml/apply-theme 'powerline)))
 
 
 
@@ -234,21 +222,35 @@
 ;; -----------------------------------------------------------
 ;; para company
 
-(defun company-abort-y-completar-caracter (mi-char)
-  (company-abort)
-  (insert mi-char))
 
-(define-key company-active-map (kbd "SPC")
-  (lambda() (interactive) (company-abort-y-completar-caracter '" ")))
 
-(define-key company-active-map [return] 'company-complete-selection)
+
+;; (defun company-abort-y-completar-caracter (mi-char)
+;;   (company-abort)
+;;   (insert mi-char))
+
+;; (define-key company-active-map (kbd "SPC")
+;;   (lambda() (interactive) (company-abort-y-completar-caracter '" ")))
+
+;; (define-key company-active-map [return] 'company-complete-selection)
+
+
+
+
 ;; (define-key company-active-map (kbd "M-c") 'company-select-previous-or-abort)
 ;; (define-key company-active-map (kbd "M-t") 'company-select-next-or-abort)
 ;; ------------------------------------------------------------
 ;; para evitar que se molesten los modos de company y yasnippet
 ;; "\t" se refiere a TAB
 
-(define-key company-active-map "\t" 'company-yasnippet-or-completion)
+;; (define-key company-active-map "\t" 'company-yasnippet-or-completion)
+
+
+
+
+;;(define-key company-active-map "s-d" 'yas-expand)
+
+
 
 
 ;; ------------------------------------------------------------
