@@ -1,0 +1,17 @@
+# -*- mode: snippet;
+# name: figure
+# key: fi
+# expand-env: ((yas-indent-line 'fixed))
+# --
+.. figure:: ${1:path}
+   :scale: ${2:100}%
+   :width: ${3:100}%
+   :align: ${4:$$(yas-choose-value '("right" "center" "left"))}
+   :alt: $5
+   :target: $1
+
+   ${6:caption}
+
+   ${7:legend}
+   
+$0

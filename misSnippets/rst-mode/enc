@@ -10,5 +10,6 @@
 :tags: $7
 :author: El Diego Efe
 :excerpt: $1
+:disqus_identifier: $1
 
 $0

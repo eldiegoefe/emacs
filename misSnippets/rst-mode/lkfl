@@ -1,0 +1,8 @@
+# -*- mode: snippet;
+# name: link file
+# key: lkfl
+# --
+\`${1:texto del link}\`_
+
+.. _$1: |filename|/${2:nombre-del-rst}.rst
+$0
