@@ -7,6 +7,11 @@
 ;;; https://github.com/bbatsov/prelude
 
 
+;; -----------------------------------------------------------------
+;; Tras la última actualización-instalación (2015-04) muestra un
+;; cuadro de diálogo con info sobre magit. Esto es para que no
+;; aparezca más.
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; -----------------------------------------------------------------
 ;; guarda todas las variables y faces de M-x customize en un archivo
