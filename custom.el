@@ -125,7 +125,8 @@
                      '(org-mode-hook
                        python-mode-hook
                        rst-mode-hook))
-    (yas-load-directory "~/.emacs.d/personal/misSnippets")))
+    (yas-load-directory "~/.emacs.d/personal/misSnippets")
+    ))
 
 
 
@@ -202,6 +203,10 @@
   :ensure t
   :bind ("M-o" . ace-window))
 
+
+;; Inicio el servidor
+
+(server-start)
 
 ;; KEYBINDINGS
 
@@ -354,3 +359,4 @@
 
 ;; (define-key prelude-mode-map [(meta shift up)] nil)
 ;; (define-key prelude-mode-map [(meta shift down)] nil)
+
