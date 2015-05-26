@@ -125,9 +125,8 @@
                      '(org-mode-hook
                        python-mode-hook
                        rst-mode-hook))
-    (yas-load-directory "~/.emacs.d/personal/misSnippets")))
-
-
+    (yas-load-directory "~/.emacs.d/personal/misSnippets")
+    ))
 
 
 ;; nuevo modo para guardar el escritorio, desde emacs 24.4
@@ -202,6 +201,10 @@
   :ensure t
   :bind ("M-o" . ace-window))
 
+
+;; Inicio el servidor
+
+(server-start)
 
 ;; KEYBINDINGS
 
