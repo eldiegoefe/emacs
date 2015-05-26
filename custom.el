@@ -106,7 +106,8 @@
 
 (use-package yasnippet
   :ensure yasnippet
-  :commands (yas-minor-mode yas-expand)
+  :defer t
+  :commands (yas-minor-mode yas-expand yas-load-directory)
   :init
   (progn
     ;; (defun company-yasnippet-or-completion ()
@@ -123,21 +124,9 @@
     (hook-into-modes #'(lambda () (yas-minor-mode 1))
                      '(org-mode-hook
                        python-mode-hook
-                       rst-mode-hook)))
-  :config
-  (progn
-    (setq yas-snippet-dirs '("~/.emacs.d/personal/misSnippets"
-                             yas-installed-snippets-dir))
-    (yas-reload-all)
-    ;; agregado para realmente cargar todos los snippets usando
-    ;; yas-snippet-dirs. De lo contrario, aunque se setea
-    ;; correctamente yas-snippet-dirs, no se activan los snippets hay
-    ;; alli. Igual sigue el problema de que en el menu de Yasnippets
-    ;; no aparece la entrada correspondiente al modo actual.
+                       rst-mode-hook))
+    (yas-load-directory "~/.emacs.d/personal/misSnippets")))
 
-    ;; (yas-load-directory "~/.emacs.d/personal/misSnippets")
-    ;; (yas-load-directory yas-installed-snippets-dir)
-    ))
 
 
 
