@@ -15,6 +15,7 @@
  '(fci-rule-color "#383838")
  '(org-CUA-compatible nil)
  '(org-replace-disputed-keys nil)
+ '(org-tags-column -100)
  '(recentf-mode t)
  '(shift-select-mode nil)
  '(sml/mode-width
