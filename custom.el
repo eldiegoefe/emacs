@@ -129,8 +129,6 @@
     ))
 
 
-
-
 ;; nuevo modo para guardar el escritorio, desde emacs 24.4
 (desktop-save-mode 1)
 
@@ -359,4 +357,3 @@
 
 ;; (define-key prelude-mode-map [(meta shift up)] nil)
 ;; (define-key prelude-mode-map [(meta shift down)] nil)
-
