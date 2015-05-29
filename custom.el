@@ -6,6 +6,9 @@
 ;;; usando prelude, by bbatsov
 ;;; https://github.com/bbatsov/prelude
 
+;; -----------------------------------------------------------------
+;; deshabilitar abbrev-mode
+(setq default-abbrev-mode nil)
 
 ;; -----------------------------------------------------------------
 ;; Tras la última actualización-instalación (2015-04) muestra un
@@ -212,7 +215,7 @@
 (global-set-key (kbd "M-a") 'helm-M-x)
 (global-set-key (kbd "<M-f12>") 'menu-bar-mode)
 (global-set-key (kbd "s-l") 'describe-thing-in-popup)
-
+(global-set-key (kbd "<f9>") 'ace-jump-mode)
 
 ;; ------------------------------------------------------------------
 ;; quitar keybindings en algunos modos que tapan funciones habituales
